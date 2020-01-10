@@ -1,8 +1,11 @@
 package com.ciaocollect.yogyatourism;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONObject;
 
-public class Tourism {
+public class Tourism implements Parcelable {
     private String tourism_name;
     private String tourism_place;
     private String tourism_detail;
@@ -20,9 +23,9 @@ public class Tourism {
         return tourism_detail;
     }
 
-    public String getTourism_picture() {
-        return tourism_picture;
-    }
+    public String getTourism_picture() { return tourism_picture; }
+
+    public Tourism() { }
 
     public Tourism(JSONObject object) {
         try{
@@ -38,4 +41,36 @@ public class Tourism {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.tourism_name);
+        dest.writeString(this.tourism_place);
+        dest.writeString(this.tourism_detail);
+        dest.writeString(this.tourism_picture);
+    }
+
+    private Tourism(Parcel in) {
+        this.tourism_name = in.readString();
+        this.tourism_place = in.readString();
+        this.tourism_detail = in.readString();
+        this.tourism_picture = in.readString();
+    }
+
+    public static final Parcelable.Creator<Tourism> CREATOR = new Parcelable.Creator<Tourism>() {
+        @Override
+        public Tourism createFromParcel(Parcel source) {
+            return new Tourism(source);
+        }
+
+        @Override
+        public Tourism[] newArray(int size) {
+            return new Tourism[size];
+        }
+    };
 }

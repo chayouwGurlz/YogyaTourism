@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -28,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         rvTourismList = findViewById(R.id.rv_list_tourism);
-        rvTourismList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvTourismList.addItemDecoration(new DividerItemDecoration(rvTourismList.getContext(), linearLayoutManager.getOrientation()));
         rvTourismList.setLayoutManager(linearLayoutManager);
+        rvTourismList.setHasFixedSize(true);
         tourismAdapterList = new TourismAdapterList(this);
         tourismAdapterList.notifyDataSetChanged();
         SetListTourism();
@@ -55,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     tourismAdapterList.setListTourism(listTourism);
                     rvTourismList.setAdapter(tourismAdapterList);
+                    ItemClickSupport.addTo(rvTourismList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                        @Override
+                        public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                            Intent tourismIntent = new Intent(MainActivity.this, DetailActivity.class);
+                            tourismIntent.putExtra(DetailActivity.EXTRA_TOURISM, listTourism.get(position));
+                            startActivity(tourismIntent);
+                        }
+                    });
                 } catch (Exception e){
                     listTourism.add(null);
                     Log.d("onSuccess catch", e.getMessage());

@@ -6,4 +6,6 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="img_thumbnail_watch">Thumbnail Image</string>
+    <string name="img_detail_watch">Detail Image</string>
+    <string name="point">Point Location</string>
 </resources>

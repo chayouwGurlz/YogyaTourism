@@ -56,7 +56,7 @@ public class TourismAdapterList extends RecyclerView.Adapter<TourismAdapterList.
         ImageView ivPicture;
         TextView tvName;
         TextView tvPlace;
-        TextView tvDetail;
+        TextView tvOverview;
 
         TourismAdapterHolder(@NonNull View itemView) {
             super(itemView);
